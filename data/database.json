@@ -1,0 +1,22 @@
+{
+    "blogs":[
+        {
+         "blogs": "My first blog", 
+         "body": "Why do we use it?\nIt's just because it is important", 
+         "Author": "Anu", 
+         "id": 1
+        },
+        {
+            "blogs": "My first blog", 
+            "body": "Why do we use it?\nIt's just because it is important", 
+            "Author": "Paul", 
+            "id": 1
+           }, 
+         {
+          "blogs": "My first blog", 
+          "body": "Why do we use it?\nIt's just because it is important", 
+          "Author": "Abayomi", 
+         "id": 1
+        }
+    ]
+}
