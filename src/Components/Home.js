@@ -2,33 +2,34 @@ import React, { useState, useEffect } from "react";
 import BlogList from "./BlogList";
 
 const Home = () => {
-  const [blogs, setBlogs] = useState([
-    { title: "My new Page", body: "lorem ipsum ...", author: "TeeDev", id: 1 },
-    { title: "My new Page", body: "lorem ipsum ...", author: "Paul", id: 2 },
-    { title: "My new Page", body: "lorem ipsum ...", author: "Abayomi", id: 3 },
-  ]);
+  const [blogs, setBlogs] = useState(null);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [name, setName] = useState("mario");
-
-  const handleDelete = (id) => {
-    const newBlogs = blogs.filter((blog) => blog.id !== id);
-    setBlogs(newBlogs);
-  };
-
-  useEffect(() => {
-    console.log("use effect ran");
-    console.log(name);
-  }, [name]);
+   useEffect(() => {
+    fetch("http://localhost:4000/api/blogs")
+    .then(res => {
+      if (!res.ok) {
+        throw Error('could not fetch data for that resource');
+      }
+      return res.json();
+    })
+    .then(data => {
+      setBlogs(data);
+      setIsPending(false);
+      setError(null);
+    })
+    .catch(err => {
+      setIsPending(false);
+      setError(err.message);
+    }) 
+  }, []);
 
   return (
     <div className="homepage">
-      <BlogList
-        blogs={blogs}
-        title="All Blogs!!!"
-        handleDelete={handleDelete}
-      />
-      <button onClick={() => setName("paul")}> change name </button>
-      <p>{name}</p>
+      {error && <div>{ error }</div>}
+      {isPending && <div>Loading ....</div>}
+      {blogs &&  <BlogList blogs={blogs} title="All Blogs!!!" /> }
     </div>
   );
 };
